@@ -42,10 +42,7 @@ class BinaryTree:
 """
     def insert(self, key):
         ''' Insert a node into the Binary Tree'''
-        if self.root is None:
-            self.root = Node(data)
-            return
-        if 
+
 
     def collect_data(self):
         def traverse(node):
