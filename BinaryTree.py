@@ -5,38 +5,47 @@ class BinaryTree:
 
 # ----- Recurisve Traversal Methods-------
     def inorder_traversal(self, node=None):
+        '''Performs in-order traversal: left subtree -> root -> right subtree'''
         if node is None:
-          return
+            return
         
+        if node:
+            if node.left:
+                self.inorder_traversal(node.left)
+            print(node.key, end=' ')
+        
+    def preorder_traversal(self, node=None):
+        '''Performs pre-order traversal: root -> left subtree -> right subtree'''
+        if node is None:
+            return
+        
+        if node:
+            print(node.key, end=' ')
+            if node.left:
+                self.preorder_traversal(node.left)
+            if node.right:
+                self.preorder_traversal(node.right)
+        
+    def postorder_traversal(self, node=None):
+        '''Performs pre-order traversal: left subtree -> right subtree -> root'''
+        if node is None:
+            return
+        
+        if node:
+            if node.left:
+                self.postorder_traversal(node.left)
+            if node.right:
+                self.postorder_traversal(node.right)
+            print(node.key, end=' ')
+            
 
-
-
-'''
-class RegularBinaryTree:
-    def __init__(self):
-        self.root = None
-
-    def insert(self, data, path=""):
-        """ Insert data based on path (e.g., 'LLR' -> left->left->right) """
+"""
+    def insert(self, key):
+        ''' Insert a node into the Binary Tree'''
         if self.root is None:
             self.root = Node(data)
             return
-
-        current = self.root
-        for direction in path[:-1]:
-            if direction == 'L':
-                if current.left is None:
-                    current.left = Node(None)
-                current = current.left
-            elif direction == 'R':
-                if current.right is None:
-                    current.right = Node(None)
-                current = current.right
-
-        if path[-1] == 'L':
-            current.left = Node(data)
-        else:
-            current.right = Node(data)
+        if 
 
     def collect_data(self):
         def traverse(node):
