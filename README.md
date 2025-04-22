@@ -12,8 +12,8 @@ mathematica
           A
        /    \
      B        C
-   /   \       \
-  D    E       F
+    /  \       \
+    D   E       F
     
 
 Create the tree structure in code using Node objects.
