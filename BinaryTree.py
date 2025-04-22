@@ -40,10 +40,6 @@ class BinaryTree:
             
 
 """
-    def insert(self, key):
-        ''' Insert a node into the Binary Tree'''
-
-
     def collect_data(self):
         def traverse(node):
             if node is None:
