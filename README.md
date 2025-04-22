@@ -9,11 +9,12 @@ following tree:
 
 mathematica
 
-     A
-    / \
-   B   C
-  / \   \
- D   E   F
+          A
+       /    \
+     B        C
+   /   \       \
+  D    E       F
+    
 
 Create the tree structure in code using Node objects.
 Implement the following recursive traversals:
