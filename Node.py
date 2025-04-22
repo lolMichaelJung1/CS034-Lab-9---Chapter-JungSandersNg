@@ -11,12 +11,21 @@ class Node:
 # -----------------------
 # Command Line Interface
 # -----------------------
+
+'''
+     A
+    / \
+   B   C
+  / \   \
+ D   E   F
+'''
 if __name__ == "__main__":
-    root = Node(10)
-    root.left = Node(5)
-    root.right = Node(15)
-    root.left.left = Node(2)
-    root.left.right = Node(7)
+    root = Node('A')
+    root.left = Node('B')
+    root.right = Node('C')
+    root.left.left = Node('D')
+    root.left.right = Node('E')
+    root.right.right = Node('F')
 
     print("DEBUG: Successfully Insert Nodes!")
     print(root)
@@ -24,3 +33,4 @@ if __name__ == "__main__":
     print(root.right)
     print(root.left.left)
     print(root.left.right)
+    print(root.right.right)
