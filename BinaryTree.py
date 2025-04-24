@@ -3,22 +3,22 @@ class BinaryTree:
         self.root = root
 
 # ----- Recurisve Traversal Methods-------
-    def inorder_traversal(self, node):
+    def inorder(self, node):
         if node: # <-- This is the crucial base case check
-            self.inorder_traversal(node.left)
+            self.inorder(node.left)
             print(node.key, end=' ')
-            self.inorder_traversal(node.right)
+            self.inorder(node.right)
 
-    def preorder_traversal(self, node):
+    def preorder(self, node):
         if node: # <-- This is the crucial base case check
             print(node.key, end=' ')
-            self.preorder_traversal(node.left)
-            self.preorder_traversal(node.right)
+            self.preorder(node.left)
+            self.preorder(node.right)
 
-    def postorder_traversal(self, node):
+    def postorder(self, node):
         if node: # <-- This is the crucial base case check
-            self.postorder_traversal(node.left)
-            self.postorder_traversal(node.right)
+            self.postorder(node.left)
+            self.postorder(node.right)
             print(node.key, end=' ')
    
     # ----- Print Tree wiht Indentation------
@@ -54,14 +54,17 @@ if __name__ == "__main__":
 
     
     print("In-order Traversal:")
-    bt.inorder_traversal(bt.root)
+    bt.inorder(bt.root)
     print()
 
     print("Pre-order Traversal:")
-    bt.preorder_traversal(bt.root)
+    bt.preorder(bt.root)
     print()
 
     print("Post-order Traversal:")
-    bt.postorder_traversal(bt.root)
+    bt.postorder(bt.root)
     print()
 
+    print()
+    print("Print Tree:")
+    bt.print_tree(bt.root)
