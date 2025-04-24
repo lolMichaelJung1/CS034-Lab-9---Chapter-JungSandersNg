@@ -20,16 +20,15 @@ class BinaryTree:
             self.postorder_traversal(node.left)
             self.postorder_traversal(node.right)
             print(node.key, end=' ')
+   
     # ----- Print Tree wiht Indentation------
-    def print_tree(self, node=None, indent="", position="root"):
-        # Implementation for print_tree
-        if node: # <-- This is the crucial base case check
-            print(f"{indent}[{position}] - {node.key}")
+    def print_tree(self, node, level=0, prefix="Root:"):
+        if node:  # <-- This is the crucial base case check
+            print(" " * (5 * level) + prefix + str(node.key))
             if node.left or node.right:
-                self.print_tree(node.left, indent + "       ", "L")
-                self.print_tree(node.right, indent + "       ", "R")
-
-
+                self.print_tree(node.left, level + 1, "L----")
+                self.print_tree(node.right, level + 1, "R----")
+                
 #-------------------------------------------------------------
 # Create a test tree manually                                #
 #         A                                                  #
@@ -66,26 +65,3 @@ if __name__ == "__main__":
     bt.postorder_traversal(bt.root)
     print()
 
-
-'''
-
-
-
-
-
-
-
-if __name__ == "__main__":
-
-# Create a test tree:
-#         A
-#        / \
-#       B   C
-#      / \   \
-#     D  E    F
-
-
-    print()
-    print("Print Tree:")
-    bt.print_tree(bt.root)
-'''
