@@ -7,7 +7,7 @@ Task:
 Write a Python program that defines a binary tree using a Node class and constructs the
 following tree:
 
-mathematica
+sample binary tree
 
           A
        /    \
