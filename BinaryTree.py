@@ -1,3 +1,5 @@
+from Node import Node
+
 class BinaryTree:
     def __init__(self, root):
         self.root = root
@@ -44,8 +46,7 @@ class BinaryTree:
 
 if __name__ == "__main__":
 
-    bt = BinaryTree() # Instantiate an object of BinaryTree
-    bt.root = Node('A')
+    bt = BinaryTree(Node('A')) # Instantiate an object of BinaryTree
     bt.root.left = Node('B')
     bt.root.right = Node('C')
     bt.root.left.left = Node('D')
