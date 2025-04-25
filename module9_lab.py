@@ -5,10 +5,13 @@
 
 # Course: Spr25_CS_034 CRN 39575
 #--------------------------------------------------------------------------------------------
-
 import unittest
 import sys
 from io import StringIO # Used for capturing print output in tests
+from TreeNode import Node
+from BinaryTree import BinaryTree
+import BST
+
 
 
 # --- Node Class ---
