@@ -254,53 +254,79 @@ class BST(BinaryTree):
         # itself is removed.
         self.root = _remove(self.root, value)
 
-###########################################
-# Command Line Interface
-#
-#
+
+
+# ---Command Line Interface----
+# Demo of BST: insert(), search(), remove(), inorder()
+ #
+ #     50
+ #    /   \
+ #   30    70
+ #  /  \   /  \
+ # 20  40 60  80
+ #
+  ##############################
+
 if __name__ == "__main__":
+    print("--- Running Example Usage ---")
+
     bst = BST()
 
-    keys = [50, 30, 70, 20, 40, 60, 80]
-    for key in keys:
-        bst.insert(key)
-
+    values = [50, 30, 70, 20, 40, 60, 80]
+    for value in values:
+        print(f"Inserting value: {value}")
+        bst.insert(value)
 
     print("\n\nPrint Binary Search Tree")
     bst.print_tree(bst.root)
 
     print("\n\nPre-order Traversal through the BST:")
     bst.preorder(bst.root)
+    print() # Add a newline after traversal output
 
     print("\n\nIn-order Traversal through the BST:")
     bst.inorder(bst.root)
+    print()
 
     print("\n\nPost-order Traversal through the BST:")
     bst.postorder(bst.root)
+    print()
 
     print("\n\nSearch for 40:")
-    print(bst.search(40))
+    found_node = bst.search(40)
+    if found_node:
+        print(f"Found node with value: 40")
+    else:
+        print(f"Value 40 not found.")
 
     print("\n\nSearch for 100:")
-    print(bst.search(100))
+    found_node = bst.search(100)
+    if found_node:
+        print(f"Found node with value: 100")
+    else:
+        print(f"Value 100 not found.")
 
     print("\n\nSearch for 60:")
-    print(bst.search(60))
+    found_node = bst.search(60)
+    if found_node:
+        print(f"Found node with value: 60")
+    else:
+        print(f"Value 60 not found.")
 
+    # Remove leaf node 20 (with no child)
     print("\n\nRemove 20:")
     bst.remove(20)
     bst.print_tree(bst.root)
     bst.inorder(bst.root)
 
-
+    # Remove node 30 (only with right child Node(40))
     print("\n\nRemove 30:")
     bst.remove(30)
     bst.print_tree(bst.root)
     bst.inorder(bst.root)
 
-
+    # Remove node 50 (with two children)
     print("\n\nRemove 50:")
     bst.remove(50)
     bst.print_tree(bst.root)
     bst.inorder(bst.root)
-
