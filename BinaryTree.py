@@ -83,8 +83,8 @@ class BinaryTree:
         """
         # Recursive step (only if the current node is valid)
         if node: # <-- This is the crucial base case check (if node is not None)
-            self.preorder(node.left) # Recurse on left child
-            self.preorder(node.right) # Recurse on right child
+            self.postorder(node.left) # Recurse on left child
+            self.postorder(node.right) # Recurse on right child
             print(node.value, end=' ')  # Visit the current node (print its value)
 
 
