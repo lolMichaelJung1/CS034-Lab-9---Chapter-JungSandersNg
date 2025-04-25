@@ -1,10 +1,15 @@
-#--------------------------------------------------------------------------------------------
+
 # Group Members: Michael Jung (ID:10680322), Timothy Sanders (??), Megan Ng (ID: 00756276)
 
 # Date: 4/21/25
 
 # Course: Spr25_CS_034 CRN 39575
 #--------------------------------------------------------------------------------------------
+
+import unittest
+import sys
+from io import StringIO # Used for capturing print output in tests
+
 
 # --- Node Class ---
 # Represents a single node in the binary tree or BST.
@@ -357,6 +362,176 @@ class BST(BinaryTree):
         self.root = _remove(self.root, value)
 
 
+# --- Helper function to capture print output ---
+# Useful for unit testing methods that print to stdout.
+def capture_print_output(func, *args, **kwargs):
+    """
+    Captures the standard output (stdout) produced by a function call.
+
+    Args:
+        func: The function to call.
+        *args: Positional arguments to pass to the function.
+        **kwargs: Keyword arguments to pass to the function.
+
+    Returns:
+        str: The captured output as a string.
+    """
+    old_stdout = sys.stdout
+    sys.stdout = captured_output = StringIO()
+    try:
+        # Call the function with provided arguments
+        func(*args, **kwargs)
+    finally:
+        # Restore standard output regardless of exceptions
+        sys.stdout = old_stdout
+    # Return the value captured in the StringIO buffer
+    return captured_output.getvalue()
+
+# --- Unit Tests ---
+# (Based on the structure from your previous request)
+class TestBST(unittest.TestCase):
+    # setUp is called before each test method (test_*)
+    def setUp(self):
+        # Initialize an empty BST for each test case
+        self.bst = BST()
+        # Define a standard set of keys/values to build a base tree
+        self.values = [10, 5, 15, 2, 7, 12, 20]
+        # Define a value not in the standard set for negative search tests
+        self.non_existent_value = 99
+
+    # Helper to build the standard tree using the current insert method (recursive)
+    def build_base_tree(self):
+         """Builds the standard base tree using the BST's insert method."""
+         print("Building base tree with values:", self.values)
+         for value in self.values:
+            self.bst.insert(value)
+
+    # Test case for inserting values and verifying the structure
+    def test_insert(self):
+        print("\nTesting Insert:")
+        # Build the base tree using the insert method (which is recursive)
+        self.build_base_tree()
+
+        # Verify the base structure built
+        print("Verifying base tree structure after insertion...")
+        self.assertIsNotNone(self.bst.root, "Tree root should not be None after insertion")
+        self.assertEqual(self.bst.root.value, 10)
+        self.assertEqual(self.bst.root.left.value, 5)
+        self.assertEqual(self.bst.root.right.value, 15)
+        self.assertEqual(self.bst.root.left.left.value, 2)
+        self.assertEqual(self.bst.root.left.right.value, 7)
+        self.assertEqual(self.bst.root.right.left.value, 12)
+        self.assertEqual(self.bst.root.right.right.value, 20)
+
+        # Test inserting a new value (8) and verify its position
+        # Based on BST rules, 8 goes to the right of 7 (10 -> 5 -> 7 -> 8)
+        print("Inserting 8...")
+        self.bst.insert(8)
+
+        # Assert that the node exists before checking its value
+        self.assertIsNotNone(self.bst.root.left.right, "Node 7 should exist")
+        self.assertIsNotNone(self.bst.root.left.right.right, "Node 8 should be inserted as the right child of 7")
+        # Now check the value
+        self.assertEqual(self.bst.root.left.right.right.value, 8)
+        # Also assert that the node that was *not* inserted there is still None
+        self.assertIsNone(self.bst.root.left.right.left, "Left child of 7 should still be None after inserting 8")
+
+        # Test inserting a duplicate value
+        print("Testing duplicate insertion (inserting 5 again)...")
+        # Capture stdout to check the printed message
+        output = capture_print_output(self.bst.insert, 5)
+        self.assertIn("Duplicated key 5 ignored.", output)
+
+
+    # Test case for searching values using the recursive search
+    def test_search(self):
+        print("\nTesting Search (Recursive):")
+        # Build the tree to search within
+        self.build_base_tree()
+        print("Built base tree for search.")
+
+        # Test searching for values that ARE in the tree
+        print("Searching for values that should be found...")
+        for value in self.values:
+            found_node = self.bst.search(value)
+            self.assertIsNotNone(found_node, f"Value {value} should be found")
+            self.assertEqual(found_node.value, value, f"Found node value should match {value}")
+
+        # Test searching for a value that is NOT in the tree
+        print(f"Searching for non-existent value {self.non_existent_value}...")
+        not_found_node = self.bst.search(self.non_existent_value)
+        self.assertIsNone(not_found_node, f"Value {self.non_existent_value} should not be found")
+
+    # Test cases for removing values using the recursive remove
+    def test_remove_leaf(self):
+        print("\nTesting Remove (Leaf, Recursive):")
+        self.build_base_tree()
+        print("Before removing 2 (leaf node):")
+        # self.bst.print_tree() # Optional: visualize
+        self.assertIsNotNone(self.bst.search(2), "Value 2 should exist before removal")
+        self.bst.remove(2)
+        print("After removing 2:")
+        # self.bst.print_tree() # Optional: visualize
+
+        # Verify the node is removed using search
+        self.assertIsNone(self.bst.search(2), "Value 2 should be removed")
+        # Verify the parent's pointer is updated
+        self.assertIsNone(self.bst.root.left.left, "5's left child should be None after removing 2")
+        self.assertIsNotNone(self.bst.root.left, "Node 5 should still exist (parent of removed node)")
+
+    def test_remove_node_with_one_child(self):
+        print("\nTesting Remove (Node with One Child, Recursive):")
+        self.build_base_tree()
+        # Insert a node (13) to make 12 a node with one child (13).
+        print("Inserting 13 to set up one-child removal case (removing 12)...")
+        self.bst.insert(13) # 10 -> 15 -> 12 -> 13 (right child)
+        self.assertIsNotNone(self.bst.search(13), "Value 13 should be inserted")
+
+        print("Before removing 12 (node with right child 13):")
+        # self.bst.print_tree() # Optional: visualize
+        self.assertIsNotNone(self.bst.search(12), "Value 12 should exist before removal")
+        self.assertIsNotNone(self.bst.search(13), "Value 13 should exist")
+
+        self.bst.remove(12)
+        print("After removing 12:")
+        # self.bst.print_tree() # Optional: visualize
+
+        self.assertIsNone(self.bst.search(12), "Value 12 should be removed (node with one child)")
+        # Check that 15's left child is now 13 (12's only child)
+        self.assertIsNotNone(self.bst.root.right, "Node 15 should still exist (parent)")
+        self.assertIsNotNone(self.bst.root.right.left, "15's left child should not be None")
+        self.assertEqual(self.bst.root.right.left.value, 13, "15's left child should now be 13")
+
+
+    def test_remove_node_with_two_children(self):
+        print("\nTesting Remove (Two Children, Recursive):")
+        self.build_base_tree()
+        print("Before removing 10 (root node with two children):")
+        # self.bst.print_tree() # Optional: visualize
+        self.assertIsNotNone(self.bst.search(10), "Value 10 should exist before removal")
+        # The inorder successor of 10 is the minimum in its right subtree (15 -> 12). So the successor is 12.
+        self.assertIsNotNone(self.bst.search(12), "Successor 12 should exist")
+
+        self.bst.remove(10)
+        print("After removing 10:")
+        # self.bst.print_tree() # Optional: visualize
+
+        self.assertIsNone(self.bst.search(10), "Value 10 should be removed")
+        # Check that the root is now the successor (12)
+        self.assertEqual(self.bst.root.value, 12, "Root should be updated to 12")
+        # Check that 15's left child (which was 12) is now None, because 12 was moved up
+        self.assertIsNotNone(self.bst.root.right, "Node 15 should still exist (parent of successor location)")
+        self.assertIsNone(self.bst.root.right.left, "15's left child should be None after 12 was moved")
+
+
+    def test_remove_non_existent(self):
+        print("\nTesting Remove (Non-existent Value, Recursive):")
+        self.build_base_tree()
+        self.bst.remove(self.non_existent_value)
+        self.assertIsNone(self.bst.search(self.non_existent_value), "Non-existent value should not be found")
+        # Ensure the tree structure didn't change (e.g., root is still 10)
+        self.assertEqual(self.bst.root.value, 10, "Root should remain unchanged when removing non-existent value")
+
 # --- Example Usage (Original Main Block) ---
 if __name__ == "__main__":
     print("--- Running Example Usage ---")
@@ -444,7 +619,10 @@ if __name__ == "__main__":
     bst.remove(remove_value_root)
     print(f"Tree after removing {remove_value_root}:")
     bst.print_tree(bst.root)
-    bst.print_tree(bst.root)
 
-    print("\n\nPrint Binary Search Tree")
-    bst.print_tree(bst.root)
+
+    # --- Running Unit Tests ---
+    print("\n\n--- Running Unit Tests ---")
+    # Note: argv and exit=False are used so that unittest.main() doesn't
+    # try to parse command-line arguments or exit the script immediately.
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)
