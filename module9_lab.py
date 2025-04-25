@@ -61,9 +61,9 @@ class BinaryTree:
         """
         # Recursive step (only if the current node is valid)
         if node: # <-- This is the crucial base case check (if node is not None)
-            self.preorder(node.left) # Recurse on left child
+            self.inorder(node.left) # Recurse on left child
             print(node.value, end=' ')  # Visit the current node (print its value)
-            self.preorder(node.right) # Recurse on right child
+            self.inorder(node.right) # Recurse on right child
 
     # Pre-order traversal method (Recursive)
     # Visits the current node, then the left subtree, then the right subtree.
@@ -124,8 +124,6 @@ class BinaryTree:
                  # Recursively print the right child (if it exists)
                  # Using 'R----' prefix and incrementing level
                  self.print_tree(node.right, level + 1, 'R----')
-            else:
-                print(' ' * (5 * (level + 1)) + 'None')
 
 
 # --- BST Class ---
@@ -362,31 +360,62 @@ class BST(BinaryTree):
         self.root = _remove(self.root, value)
 
 
-# --- Helper function to capture print output ---
-# Useful for unit testing methods that print to stdout.
-def capture_print_output(func, *args, **kwargs):
-    """
-    Captures the standard output (stdout) produced by a function call.
+if __name__ == "__main__":
+    bst = BST()
 
-    Args:
-        func: The function to call.
-        *args: Positional arguments to pass to the function.
-        **kwargs: Keyword arguments to pass to the function.
+    keys = [50, 30, 70, 20, 40, 60, 80]
+    for key in keys:
+        bst.insert(key)
 
-    Returns:
-        str: The captured output as a string.
-    """
-    old_stdout = sys.stdout
-    sys.stdout = captured_output = StringIO()
-    try:
-        # Call the function with provided arguments
-        func(*args, **kwargs)
-    finally:
-        # Restore standard output regardless of exceptions
-        sys.stdout = old_stdout
-    # Return the value captured in the StringIO buffer
-    return captured_output.getvalue()
 
+    print("\n\nPrint Binary Search Tree")
+    bst.print_tree(bst.root)
+
+    print("\n\nPre-order Traversal through the BST:")
+    bst.preorder(bst.root)
+
+    print("\n\nIn-order Traversal through the BST:")
+    bst.inorder(bst.root)
+
+    print("\n\nPost-order Traversal through the BST:")
+    bst.postorder(bst.root)
+
+    print("\n\nSearch for 40:")
+    print(bst.search(40))
+
+    print("\n\nSearch for 100:")
+    print(bst.search(100))
+
+    print("\n\nSearch for 60:")
+    print(bst.search(60))
+
+    print("\n\nRemove 20:")
+    bst.remove(20)
+    bst.print_tree(bst.root)
+    bst.inorder(bst.root)
+
+
+    print("\n\nRemove 30:")
+    bst.remove(30)
+    bst.print_tree(bst.root)
+    bst.inorder(bst.root)
+
+
+    print("\n\nRemove 50:")
+    bst.remove(50)
+    bst.print_tree(bst.root)
+    bst.inorder(bst.root)
+
+
+
+
+
+
+
+
+
+
+'''
 # --- Unit Tests ---
 #--------------------
 class TestBST(unittest.TestCase):
