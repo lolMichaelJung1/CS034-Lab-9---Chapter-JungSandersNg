@@ -109,12 +109,19 @@ class AVLTree(BST):
             #The balance factor of a node is calculated to be the height of the left subtree - height of the right subtree
             balanceFactor = node.get_balance()
 
-            #Case 1: Left Left rotation
-                
-            #Case 2: Right Right rotation
-
+            #Case 1: Left rotation
+            if balanceFactor > 1 and value < node.left.key:
+                return _right_rotation(node)
+            #Case 2: Right rotation
+            if balanceFactor < -1 and value > node.right.key:
+                return _left_rotation(node)
             #Case 3: Left Right rotation
-
+            if balanceFactor > 1 and value > node.left.key:
+                node.set_child("left", _left_rotation(node.left))
+                return _right_rotation(node)
             #Case 4: Right Left rotation
-
+            if balanceFactor < -1 and value < node.right.key:
+                node.set_child("right", _right_rotation(node.right))
+                return _left_rotation(node)
+            
             return node
