@@ -361,6 +361,40 @@ class BST(BinaryTree):
 
 
 if __name__ == "__main__":
+
+ #----------------------------------------------------
+ # Demo of BinaryTree (travesal methods, print_tree()) 
+ #----------------------------------------------------
+    bt = BinaryTree() # Instantiate an object of BinaryTree
+    bt.root = Node('A')
+    bt.root.left = Node('B')
+    bt.root.right = Node('C')
+    bt.root.left.left = Node('D')
+    bt.root.left.right = Node('E')
+    bt.root.right.right = Node('F')
+
+    print("In-order Traversal:")
+    bt.inorder(bt.root)
+    print()
+
+    print("Pre-order Traversal:")
+    bt.preorder(bt.root)
+    print()
+
+    print("Post-order Traversal:")
+    bt.postorder(bt.root)
+    print()
+
+    print()
+    print("Print Tree:")
+    bt.print_tree(bt.root)
+# ------------The End of Demo of BinaryTree---------------
+
+
+
+ #---------------------------------------------------------
+ # Demo of BST: insert(), search(), remove(), inorder() 
+ #---------------------------------------------------------
     bst = BST()
 
     keys = [50, 30, 70, 20, 40, 60, 80]
@@ -405,7 +439,7 @@ if __name__ == "__main__":
     bst.remove(50)
     bst.print_tree(bst.root)
     bst.inorder(bst.root)
-
+# ------------The End of Demo of BST---------------
 
 
 
