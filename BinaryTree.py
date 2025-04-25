@@ -8,6 +8,7 @@
 
 from TreeNode import Node
 
+
 # --- BinaryTree Class ---
 # A base class for general binary tree operations. BST inherits from this.
 class BinaryTree:
@@ -35,9 +36,9 @@ class BinaryTree:
         """
         # Recursive step (only if the current node is valid)
         if node: # <-- This is the crucial base case check (if node is not None)
-            self.preorder(node.left) # Recurse on left child
+            self.inorder(node.left) # Recurse on left child
             print(node.value, end=' ')  # Visit the current node (print its value)
-            self.preorder(node.right) # Recurse on right child
+            self.inorder(node.right) # Recurse on right child
 
     # Pre-order traversal method (Recursive)
     # Visits the current node, then the left subtree, then the right subtree.
@@ -98,49 +99,3 @@ class BinaryTree:
                  # Recursively print the right child (if it exists)
                  # Using 'R----' prefix and incrementing level
                  self.print_tree(node.right, level + 1, 'R----')
-            else:
-                print(' ' * (5 * (level + 1)) + 'None'
-
-
-#-----------------------------------------------------#
-#            COMMAND LINE INTERFACE                   #
-#-----------------------------------------------------#              
-#-------------------------------------------------------------
-# Create a test tree manually                                #
-#         A                                                  #
-#        / \                                                 #
-#       B   C                                                #
-#      / \   \                                               #
-#     D  E    F                                              #
-#                                                            #
-# Print the nodes in-order, pre-order, post-order            #
-#                                                            #
-# Print the manually created binary tree with indentation    #
-#------------------------------------------------------------#
-'''
-if __name__ == "__main__":
-
-    bt = BinaryTree(Node('A')) # Instantiate an object of BinaryTree
-    bt.root.left = Node('B')
-    bt.root.right = Node('C')
-    bt.root.left.left = Node('D')
-    bt.root.left.right = Node('E')
-    bt.root.right.right = Node('F')
-
-    
-    print("In-order Traversal:")
-    bt.inorder(bt.root)
-    print()
-'''
-    print("Pre-order Traversal:")
-    bt.preorder(bt.root)
-    print()
-
-    print("Post-order Traversal:")
-    bt.postorder(bt.root)
-    print()
-
-    print()
-    print("Print Tree:")
-    bt.print_tree(bt.root)
-'''
