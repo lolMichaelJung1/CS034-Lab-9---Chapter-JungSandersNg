@@ -4,6 +4,19 @@
 
 # Course: Spr25_CS_034 CRN 39575
 #--------------------------------------------------------------------------------------------
+
+
+# Create a test tree manually                                
+#          50                                                  
+#        /    \                                                 
+#       30     70                                                
+#     /   \   /   \                                               
+#    20   40  60   80                                            
+# 
+# Print BST with indentation
+# Print the nodes pre-order, in-order, post-order           
+# ######################################################   
+
 from TreeNode import Node
 from BinaryTree import BinaryTree
 
