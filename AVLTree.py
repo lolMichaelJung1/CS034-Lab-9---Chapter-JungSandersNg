@@ -12,7 +12,9 @@
 #    5    12  18
 #   /
 #  4
-# Print AVL with indentation
+# The tree above is balanced since all the balance factors are between {-1, 0, 1}
+# The Balance Factor for each nodes are: 13:1, 6:1, 21:1, 5:1, 12:0, 18:0, 4:0
+# Print AVL Tree with indentation
 # Print the nodes pre-order, in-order, post-order to visualize the balancing of tree after the deletion and insertion of nodes
 # ######################################################
 
@@ -20,5 +22,4 @@ from Node import Node
 
 # --- AVL Tree Class ---
 class AVLTree():
-
 
