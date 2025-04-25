@@ -123,8 +123,6 @@ class BinaryTree:
 ####################################
 
 if __name__ == "__main__":
-
-
     bt = BinaryTree() # Instantiate an object of BinaryTree
     bt.root = Node('A')
     bt.root.left = Node('B')
@@ -134,16 +132,20 @@ if __name__ == "__main__":
     bt.root.right.right = Node('F')
 
     print("In-order Traversal:")
-    bt.inorder_traversal(bt.root)
+    bt.inorder(bt.root)
     print()
 
     print("Pre-order Traversal:")
-    bt.preorder_traversal(bt.root)
+    bt.preorder(bt.root)
     print()
 
     print("Post-order Traversal:")
-    bt.postorder_traversal(bt.root)
+    bt.postorder(bt.root)
     print()
+
+    print()
+    print("Print Tree:")
+    bt.print_tree(bt.root)
 
     print()
     print("Print Tree:")
