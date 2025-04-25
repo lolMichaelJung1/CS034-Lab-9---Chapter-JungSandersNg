@@ -388,7 +388,7 @@ def capture_print_output(func, *args, **kwargs):
     return captured_output.getvalue()
 
 # --- Unit Tests ---
-# (Based on the structure from your previous request)
+#--------------------
 class TestBST(unittest.TestCase):
     # setUp is called before each test method (test_*)
     def setUp(self):
