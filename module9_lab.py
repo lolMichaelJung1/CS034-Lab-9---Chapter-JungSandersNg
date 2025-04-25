@@ -446,15 +446,36 @@ if __name__ == "__main__":
 
 
 
+# --- Helper function to capture print output ---
+# Useful for unit testing methods that print to stdout.
+def capture_print_output(func, *args, **kwargs):
+    """
+    Captures the standard output (stdout) produced by a function call.
+
+    Args:
+        func: The function to call.
+        *args: Positional arguments to pass to the function.
+        **kwargs: Keyword arguments to pass to the function.
+
+    Returns:
+        str: The captured output as a string.
+    """
+    old_stdout = sys.stdout
+    sys.stdout = captured_output = StringIO()
+    try:
+        # Call the function with provided arguments
+        func(*args, **kwargs)
+    finally:
+        # Restore standard output regardless of exceptions
+        sys.stdout = old_stdout
+    # Return the value captured in the StringIO buffer
+    return captured_output.getvalue()
 
 
+################################
+# --- Implement Unit Tests ---
+################################
 
-
-
-
-'''
-# --- Unit Tests ---
-#--------------------
 class TestBST(unittest.TestCase):
     # setUp is called before each test method (test_*)
     def setUp(self):
@@ -598,7 +619,92 @@ class TestBST(unittest.TestCase):
         # Ensure the tree structure didn't change (e.g., root is still 10)
         self.assertEqual(self.bst.root.value, 10, "Root should remain unchanged when removing non-existent value")
 
-# --- Example Usage (Original Main Block) ---
+
+
+'''
+if __name__ == "__main__":
+
+ #----------------------------------------------------
+ # Demo of BinaryTree (travesal methods, print_tree()) 
+ #----------------------------------------------------
+    bt = BinaryTree() # Instantiate an object of BinaryTree
+    bt.root = Node('A')
+    bt.root.left = Node('B')
+    bt.root.right = Node('C')
+    bt.root.left.left = Node('D')
+    bt.root.left.right = Node('E')
+    bt.root.right.right = Node('F')
+
+    print("In-order Traversal:")
+    bt.inorder(bt.root)
+    print()
+
+    print("Pre-order Traversal:")
+    bt.preorder(bt.root)
+    print()
+
+    print("Post-order Traversal:")
+    bt.postorder(bt.root)
+    print()
+
+    print()
+    print("Print Tree:")
+    bt.print_tree(bt.root)
+# ------------The End of Demo of BinaryTree---------------
+
+
+
+ #---------------------------------------------------------
+ # Demo of BST: insert(), search(), remove(), inorder() 
+ #---------------------------------------------------------
+    bst = BST()
+
+    keys = [50, 30, 70, 20, 40, 60, 80]
+    for key in keys:
+        bst.insert(key)
+
+
+    print("\n\nPrint Binary Search Tree")
+    bst.print_tree(bst.root)
+
+    print("\n\nPre-order Traversal through the BST:")
+    bst.preorder(bst.root)
+
+    print("\n\nIn-order Traversal through the BST:")
+    bst.inorder(bst.root)
+
+    print("\n\nPost-order Traversal through the BST:")
+    bst.postorder(bst.root)
+
+    print("\n\nSearch for 40:")
+    print(bst.search(40))
+
+    print("\n\nSearch for 100:")
+    print(bst.search(100))
+
+    print("\n\nSearch for 60:")
+    print(bst.search(60))
+
+    print("\n\nRemove 20:")
+    bst.remove(20)
+    bst.print_tree(bst.root)
+    bst.inorder(bst.root)
+
+
+    print("\n\nRemove 30:")
+    bst.remove(30)
+    bst.print_tree(bst.root)
+    bst.inorder(bst.root)
+
+
+    print("\n\nRemove 50:")
+    bst.remove(50)
+    bst.print_tree(bst.root)
+    bst.inorder(bst.root)
+# ------------The End of Demo of BST---------------
+################################
+#    Command Line Interface 
+################################
 if __name__ == "__main__":
     print("--- Running Example Usage ---")
     bst = BST()
@@ -692,3 +798,29 @@ if __name__ == "__main__":
     # Note: argv and exit=False are used so that unittest.main() doesn't
     # try to parse command-line arguments or exit the script immediately.
     unittest.main(argv=['first-arg-is-ignored'], exit=False)
+
+
+# --- Helper function to capture print output ---
+# Useful for unit testing methods that print to stdout.
+def capture_print_output(func, *args, **kwargs):
+    """
+    Captures the standard output (stdout) produced by a function call.
+
+    Args:
+        func: The function to call.
+        *args: Positional arguments to pass to the function.
+        **kwargs: Keyword arguments to pass to the function.
+
+    Returns:
+        str: The captured output as a string.
+    """
+    old_stdout = sys.stdout
+    sys.stdout = captured_output = StringIO()
+    try:
+        # Call the function with provided arguments
+        func(*args, **kwargs)
+    finally:
+        # Restore standard output regardless of exceptions
+        sys.stdout = old_stdout
+    # Return the value captured in the StringIO buffer
+    return captured_output.getvalue()
