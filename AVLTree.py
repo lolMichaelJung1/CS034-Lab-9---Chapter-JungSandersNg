@@ -5,15 +5,13 @@
 # Course: Spr25_CS_034 CRN 39575
 #--------------------------------------------------------------------------------------------
 # Create a test tree manually
-#          13
-#        /    \
-#       6     21
-#     /   \   /
-#    5    12  18
-#   /
-#  4
+#          50                                                  
+#        /    \                                                 
+#       30     70                                                
+#     /   \   /   \                                               
+#    20   40  60   80    
 # The tree above is balanced since all the balance factors are between {-1, 0, 1}
-# The Balance Factor for each nodes are: 13:1, 6:1, 21:1, 5:1, 12:0, 18:0, 4:0
+# The Balance Factor for each node are: 50:0, 30:0,70:0, 20:0, 40:0, 60:0, 80:0
 # Print AVL Tree with indentation
 # Print the nodes pre-order, in-order, post-order to visualize the balancing of tree after the deletion and insertion of nodes
 # ######################################################
