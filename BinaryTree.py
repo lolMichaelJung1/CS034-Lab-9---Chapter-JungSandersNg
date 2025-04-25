@@ -111,16 +111,15 @@ class BinaryTree:
                  self.print_tree(node.right, level + 1, 'R----')
 
 
-####################################
+
 # Command Line Interface
-#
 # Create a test tree:
 #         A
 #        / \
 #       B   C
 #      / \   \
 #     D  E    F
-####################################
+
 
 if __name__ == "__main__":
     bt = BinaryTree() # Instantiate an object of BinaryTree
