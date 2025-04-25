@@ -253,3 +253,54 @@ class BST(BinaryTree):
         # is assigned back to self.root. This handles the case where the root node
         # itself is removed.
         self.root = _remove(self.root, value)
+
+###########################################
+# Command Line Interface
+#
+#
+if __name__ == "__main__":
+    bst = BST()
+
+    keys = [50, 30, 70, 20, 40, 60, 80]
+    for key in keys:
+        bst.insert(key)
+
+
+    print("\n\nPrint Binary Search Tree")
+    bst.print_tree(bst.root)
+
+    print("\n\nPre-order Traversal through the BST:")
+    bst.preorder(bst.root)
+
+    print("\n\nIn-order Traversal through the BST:")
+    bst.inorder(bst.root)
+
+    print("\n\nPost-order Traversal through the BST:")
+    bst.postorder(bst.root)
+
+    print("\n\nSearch for 40:")
+    print(bst.search(40))
+
+    print("\n\nSearch for 100:")
+    print(bst.search(100))
+
+    print("\n\nSearch for 60:")
+    print(bst.search(60))
+
+    print("\n\nRemove 20:")
+    bst.remove(20)
+    bst.print_tree(bst.root)
+    bst.inorder(bst.root)
+
+
+    print("\n\nRemove 30:")
+    bst.remove(30)
+    bst.print_tree(bst.root)
+    bst.inorder(bst.root)
+
+
+    print("\n\nRemove 50:")
+    bst.remove(50)
+    bst.print_tree(bst.root)
+    bst.inorder(bst.root)
+
