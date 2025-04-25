@@ -49,6 +49,7 @@ class AVLTree(BST):
             right_sub_tree = temp.right
             left_heavy.setChild("left",right_sub_tree)
             temp.set_child("right", left_heavy)
+            return temp
         """
         Balances a tree that is heavy towards the right by rotating the nodes to the left
 
@@ -60,6 +61,7 @@ class AVLTree(BST):
             left_sub_tree = temp.left
             right_heavy.set_child("left", left_sub_tree)
             temp.set_child("right", right_heavy)
+            return temp
 
         # Define the recursive helper function _insert
         # It takes the current node and the value to insert,
@@ -82,13 +84,13 @@ class AVLTree(BST):
                 return Node(value)
 
             # Recursive step: Compare the value with the current node's value.
-            if value < node.value:
+            if value < node.key:
                 # If the value is smaller, go to the left subtree.
                 # The recursive call returns the root of the modified left subtree,
                 # which we then assign back to node.left.
                 # print(f"DEBUG: Going left from {node.value}") # Debug statement
                 node.left = _insert(node.left, value)
-            elif value > node.value:
+            elif value > node.key:
                 # If the value is larger, go to the right subtree.
                 # The recursive call returns the root of the modified right subtree,
                 # which we then assign back to node.right.
@@ -124,4 +126,5 @@ class AVLTree(BST):
                 node.set_child("right", _right_rotation(node.right))
                 return _left_rotation(node)
             
+            self.root = _insert(self.root, value)
             return node
