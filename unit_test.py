@@ -11,7 +11,7 @@ import sys
 from io import StringIO # Used for capturing print output in tests
 from TreeNode import Node
 from BinaryTree import BinaryTree
-from BST import BST
+import BST
 
 
 # --- Helper function to capture print output ---
