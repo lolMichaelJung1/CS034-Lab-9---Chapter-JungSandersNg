@@ -4,7 +4,7 @@
 
 # Course: Spr25_CS_034 CRN 39575
 #--------------------------------------------------------------------------------------------
-from TreeNode import TreeNode
+from TreeNode import Node
 from BinaryTree import BinaryTree
 
 
