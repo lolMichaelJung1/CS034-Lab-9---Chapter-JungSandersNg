@@ -5,13 +5,38 @@
 
 # Course: Spr25_CS_034 CRN 3957
 
-
 import unittest
 import sys
 from io import StringIO # Used for capturing print output in tests
 from TreeNode import Node
 from BinaryTree import BinaryTree
-from BST import BST
+import BST
+
+
+# --- Helper function to capture print output ---
+# Useful for unit testing methods that print to stdout.
+def capture_print_output(func, *args, **kwargs):
+    """
+    Captures the standard output (stdout) produced by a function call.
+
+    Args:
+        func: The function to call.
+        *args: Positional arguments to pass to the function.
+        **kwargs: Keyword arguments to pass to the function.
+
+    Returns:
+        str: The captured output as a string.
+    """
+    old_stdout = sys.stdout
+    sys.stdout = captured_output = StringIO()
+    try:
+        # Call the function with provided arguments
+        func(*args, **kwargs)
+    finally:
+        # Restore standard output regardless of exceptions
+        sys.stdout = old_stdout
+    # Return the value captured in the StringIO buffer
+    return captured_output.getvalue()
 
 
 ################################
