@@ -824,3 +824,5 @@ def capture_print_output(func, *args, **kwargs):
         sys.stdout = old_stdout
     # Return the value captured in the StringIO buffer
     return captured_output.getvalue()
+
+'''
