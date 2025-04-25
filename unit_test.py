@@ -6,7 +6,9 @@
 # Course: Spr25_CS_034 CRN 39575
 #--------------------------------------------------------------------------------------------
 
-import Node from 
-import BinaryTree from
-import BST from 
+from Node import Node
+from BinaryTree import BinaryTree
+from BST import BST
+
+
 
