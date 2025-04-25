@@ -21,6 +21,8 @@ class Node:
         self.value = value
         self.left = None  # Pointer to the left child node
         self.right = None # Pointer to the right child node
+        self.height = 0
+
 
     # String representation of the Node
     def __str__(self):
