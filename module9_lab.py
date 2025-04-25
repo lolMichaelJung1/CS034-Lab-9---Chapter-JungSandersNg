@@ -538,7 +538,13 @@ if __name__ == "__main__":
     print("--- Running Example Usage ---")
 
  #----------------------------------------------------
- # Demo of BinaryTree (travesal methods, print_tree())
+# Demo of BinaryTree (travesal methods, print_tree())    
+# Create a test tree:
+#         A
+#        / \
+#       B   C
+#      / \   \
+#     D  E    F
  #----------------------------------------------------
     bt = BinaryTree()
     bt.root = Node('A')
