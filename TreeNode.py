@@ -5,10 +5,11 @@
 # Course: Spr25_CS_034 CRN 39575
 
 #--------------------------------------------------------------------------------------------
+from io import StringIO
+import sys
 
 
 # --- Node Class ---
-# Represents a single node in the binary tree or BST.
 class Node:
     # Constructor for the Node class
     def __init__(self, value=None):
@@ -18,10 +19,10 @@ class Node:
         Args:
             value: The data to be stored in the node. Defaults to None.
         """
-        self.value = value
-        self.left = None  # Pointer to the left child node
-        self.right = None # Pointer to the right child node
-        self.height = 0
+        self.value = value  # Store data in the node
+        self.left = None    # Pointer to the left child node
+        self.right = None   # Pointer to the right child node
+        self.height = 0     # Height of the node (used in AVL trees for balancing)
 
 
     # String representation of the Node
