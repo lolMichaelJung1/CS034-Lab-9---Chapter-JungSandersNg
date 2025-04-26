@@ -1,5 +1,19 @@
 # CS034-Lab-9---Chapter-JungSandersNg
 
+## Design And Structure
+
+- Node class
+
+- BinaryTree class (parent class)
+
+- BST class (child class of BinaryTree)
+
+- Extended AVLTree class as a child of BST (not BinaryTree)
+
+- Proper insert() override for AVL-specific balancing and rotation
+
+
+
 ## Part 1: Binary Tree Construction and Traversal
 #### Task:
 Write a Python program that defines a binary tree using a Node class and constructs the
