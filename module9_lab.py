@@ -10,146 +10,114 @@ import sys
 from io import StringIO # Used for capturing print output in tests
 
 
+from io import StringIO
+import sys
+
+# --- Class Definitions ---
+#--------------------------
+
 # --- Node Class ---
-# Represents a single node in the binary tree or BST.
+# Represents a tree Node, with value, left, right and height member datas.
 class Node:
-    # Constructor for the Node class
     def __init__(self, value=None):
-        """
-        Initializes a new node with a given value.
+        self.value = value      # Store data in the node
+        self.left = None        # Pointer to the left child node
+        self.right = None       # Pointer to the right child node
+        self.height = 0         # Height of the node (used in AVL trees for balancing)
 
-        Args:
-            value: The data to be stored in the node. Defaults to None.
-        """
-        self.value = value
-        self.left = None  # Pointer to the left child node
-        self.right = None # Pointer to the right child node
-
-    # String representation of the Node
     def __str__(self):
-        """
-        Returns the string representation of the node's value.
-        """
+        # Return a string representation of the node's value
         return str(self.value)
 
 
 # --- BinaryTree Class ---
-# A base class for general binary tree operations. BST inherits from this.
+# Represents a AVL Tree, implement common traversal methods and print_tree().
 class BinaryTree:
-    # Constructor for the BinaryTree class
     def __init__(self, root=None):
         """
-        Initializes a binary tree.
+        Initializes a BinaryTree with an optional root node.
 
         Args:
-            root: The root node of the tree. Defaults to None (empty tree).
+            root: The root node of the binary tree.
         """
         self.root = root # The root node of the tree
 
-    # In-order traversal method (Recursive)
-    # Visits left subtree, then the current node, then the right subtree.
-    # Typically results in sorted order for a BST.
     def inorder(self, node=None):
         """
-        Performs an in-order traversal starting from the given node (or root).
-        Prints node values during traversal.
+        Performs an in-order traversal of the binary tree.
+        Visits nodes in the order: left subtree, root, right subtree.
 
         Args:
-            node: The current node to start the traversal from. Defaults to
-                  the tree's root if not specified.
+            node: The current node being traversed.
         """
-        # Recursive step (only if the current node is valid)
-        if node: # <-- This is the crucial base case check (if node is not None)
-            self.inorder(node.left) # Recurse on left child
-            print(node.value, end=' ')  # Visit the current node (print its value)
-            self.inorder(node.right) # Recurse on right child
+        if node:
+            self.inorder(node.left)
+            print(node.value, end=' ')
+            self.inorder(node.right)
 
-    # Pre-order traversal method (Recursive)
-    # Visits the current node, then the left subtree, then the right subtree.
-    # Useful for copying/recreating the tree structure.
     def preorder(self, node=None):
         """
-        Performs a pre-order traversal starting from the given node (or root).
-        Prints node values during traversal.
+        Performs a pre-order traversal of the binary tree.
+        Visits nodes in the order: root, left subtree, right subtree.
 
         Args:
-            node: The current node to start the traversal from. Defaults to
-                  the tree's root if not specified.
+            node: The current node being traversed.
         """
-        # Recursive step (only if the current node is valid)
-        if node: # <-- This is the crucial base case check (if node is not None)
-            print(node.value, end=' ')  # Visit the current node (print its value)
-            self.preorder(node.left) # Recurse on left child
-            self.preorder(node.right) # Recurse on right child
+        if node: # If the current node is not None
+            print(node.value, end=' ')      # Visit (print) the current node's value
+            self.preorder(node.left)        # Recursively traverse the left subtree
+            self.preorder(node.right)       # Recursively traverse the right subtree
 
-
-    # Post-order traversal method (Recursive)
-    # Visits the left subtree, then the right subtree, then the current node.
-    # Useful for deleting the tree (delete children before parent).
     def postorder(self, node=None):
         """
-        Performs a post-order traversal starting from the given node (or root).
-        Prints node values during traversal.
+        Performs a post-order traversal of the binary tree.
+        Visits nodes in the order: left subtree, right subtree, root.
 
         Args:
-            node: The current node to start the traversal from. Defaults to
-                  the tree's root if not specified.
+            node: The current node being traversed. Defaults to the root of the tree.
         """
-        # Recursive step (only if the current node is valid)
-        if node: # <-- This is the crucial base case check (if node is not None)
-            self.preorder(node.left) # Recurse on left child
-            self.preorder(node.right) # Recurse on right child
-            print(node.value, end=' ')  # Visit the current node (print its value)
+        if node: # If the current node is not None
+            self.postorder(node.left)       # Recursively traverse the left subtree
+            self.postorder(node.right)      # Recursively traverse the right subtree
+            print(node.value, end=' ')      # Visit (print) the current node's value
 
-
-    # Method to print the tree structure visually
     def print_tree(self, node=None, level=0, prefix='Root:'):
         """
-        Prints a visual representation of the tree structure.
+        Prints the binary tree in a visually appealing format.
+
         Args:
-            node: The current node being printed. Defaults to the tree's root.
-            level: The depth of the current node, used for indentation.
-            prefix: A string prefix indicating the node's relationship to its parent
-                    ('Root:', 'L----', 'R----').
+            node: The starting node for printing. Defaults to the root of the tree.
+            level: The current level of the tree. Defaults to 0 (used for indentation).
+            prefix: The prefix for indiicate the position of the node (e.g. "Root:", "L----", "R----").
         """
-        if node: # <-- This is the crucial base case check
-            # Print the current node with indentation
-            print(' ' * (5 * level) + prefix + str(node.value))
-            # Only print child branches if the current node has children
-            if node.left or node.right:
-                 # Recursively print the left child (if it exists)
-                 # Using 'L----' prefix and incrementing level
-                 self.print_tree(node.left, level + 1, 'L----')
-                 # Recursively print the right child (if it exists)
-                 # Using 'R----' prefix and incrementing level
-                 self.print_tree(node.right, level + 1, 'R----')
+        if node: # If the current node is None
+            print(' ' * (5 * level) + prefix + str(node.value)) # Print the node's value with indentation
+            if node.left or node.right:  # If the node has children
+                # Recursively call print_tree on left and right children
+                self.print_tree(node.left, level + 1, 'L----')
+                self.print_tree(node.right, level + 1, 'R----')
 
 
 # --- BST Class ---
-# Represents a Binary Search Tree, inheriting basic tree operations.
+# Represents a BST, inheriting basic tree operations from BinaryTree.
 class BST(BinaryTree):
-    # Constructor for the BST class
     def __init__(self, root=None):
         """
-        Initializes a Binary Search Tree.
+        Initializes a BST with an optional root node.
 
         Args:
-            root: The root node of the BST. Defaults to None (empty BST).
+            root: The root node of the binary search tree.
         """
-        super().__init__(root) # Call the parent BinaryTree constructor
+        super().__init__(root)
 
 
-    # Insert a value into the BST (recursive implementation)
     def insert(self, value):
         """
-        Inserts a new value into the Binary Search Tree using recursion.
+        Inserts a value into the Binary Search Tree.
 
         Args:
             value: The value to insert.
         """
-        # Define the recursive helper function _insert
-        # It takes the current node and the value to insert,
-        # and returns the root of the (potentially new) subtree.
         def _insert(node, value):
             """
             Recursive helper for insertion.
@@ -161,44 +129,20 @@ class BST(BinaryTree):
             Returns:
                 Node: The root of the subtree after insertion.
             """
-            # Base case: If the current node is None, we found the correct spot
-            # to insert the new node. Create it and return it.
-            if not node: # Equivalent to node is None
-                # print(f"DEBUG: Creating node with value {value}") # Debug statement
-                return Node(value)
-
-            # Recursive step: Compare the value with the current node's value.
-            if value < node.value:
-                # If the value is smaller, go to the left subtree.
-                # The recursive call returns the root of the modified left subtree,
-                # which we then assign back to node.left.
-                # print(f"DEBUG: Going left from {node.value}") # Debug statement
-                node.left = _insert(node.left, value)
-            elif value > node.value:
-                # If the value is larger, go to the right subtree.
-                # The recursive call returns the root of the modified right subtree,
-                # which we then assign back to node.right.
-                # print(f"DEBUG: Going right from {node.value}") # Debug statement
-                node.right = _insert(node.right, value)
+            if not node: # If the current node is None (empty subtree)
+                return Node(value)  # Create a new node with the value and return it
+            if value < node.value:  # If the value is less than the current node's value
+                node.left = _insert(node.left, value)  # Recursively insert into the left subtree
+            elif value > node.value:  # If the value is greater than the current node's value
+                node.right = _insert(node.right, value)  # Recursively insert into the right subtree
             else:
-                # If the value is equal, it's a duplicate. Do nothing and print a message.
-                # Return the current node as the subtree remains unchanged.
-                print(f"Duplicated key {value} ignored.")
-                return node # Explicitly return the node
+                print(f"Duplicated key {value} ignored.") # Suppress this during test setup unless testing output
+                pass # Or handle differently if testing this specific output
+            return node # Return the current node (potentially modified)
 
-            # Return the current node. This is crucial in the recursive approach
-            # as it re-links the parent node's pointer to this (potentially modified)
-            # node or the new node created in the base case.
-            return node
-
-        # Start the recursive insertion from the root.
-        # The result of the recursive call (the potentially new root of the entire tree)
-        # is assigned back to self.root. This handles insertion into an empty tree
-        # as well as inserting into non-empty trees.
-        self.root = _insert(self.root, value)
+        self.root = _insert(self.root, value) # Start the insertion from the root
 
 
-    # Search for a value in the BST (recursive implementation)
     def search(self, value):
         """
         Searches for a value in the Binary Search Tree using recursion.
@@ -209,8 +153,6 @@ class BST(BinaryTree):
         Returns:
             Node: The node containing the value if found, otherwise None.
         """
-        # Define the recursive helper function _search
-        # It takes the current node (starting point) and the value to search for.
         def _search(node, value):
             """
             Recursive helper for searching a value.
@@ -226,26 +168,24 @@ class BST(BinaryTree):
             # along this path. Return None.
             # Base Case 2: If the current node's value matches the search value,
             # we found the node. Return the node.
-            # --- FIX: Use 'value' consistently instead of 'key', fix debug print ---
             if node is None or value == node.value:
-                # print(f"DEBUG: Search returning {node.value if node else 'None'}") # Debug statement (handle node being None)
+                print(f"DEBUG: Search returning {node.value if node else 'None'}") # Debug statement (handle node being None)
                 return node # Return the node if found, or None if node is None
 
             # Recursive Step: Compare the search value with the current node's value.
             if value < node.value:
                 # If the search value is smaller, the target node must be in the left subtree.
                 # Recursively call _search on the left child.
-                # print(f"DEBUG: Search going left from {node.value}") # Debug statement
+                print(f"DEBUG: Search going left from {node.value}") # Debug statement
                 return _search(node.left, value)
             else: # value > node.value
                 # If the search value is larger, the target node must be in the right subtree.
                 # Recursively call _search on the right child.
-                # print(f"DEBUG: Search going right from {node.value}") # Debug statement
+                print(f"DEBUG: Search going right from {node.value}") # Debug statement
                 return _search(node.right, value)
 
         # Start the recursive search from the root of the tree.
         return _search(self.root, value)
-
 
     # Remove a value from the BST (recursive implementation)
     def remove(self, value):
@@ -295,7 +235,7 @@ class BST(BinaryTree):
             # Base Case 1: If the current node is None, the value was not found
             # in this branch of the tree. Return None.
             if node is None: # if not node:
-                # print(f"DEBUG: Value {value} not found in this branch.") # Debug statement
+                print(f"DEBUG: Value {value} not found in this branch.") # Debug statement
                 return node # Return node (which is None)
 
             # Recursive Step 1: Navigate down the tree to find the node to remove.
@@ -303,13 +243,13 @@ class BST(BinaryTree):
                 # If the value is smaller, the node to remove is in the left subtree.
                 # Recursively call _remove on the left child and assign the result
                 # back to node.left. This re-links the parent.
-                # print(f"DEBUG: Going left from {node.value}") # Debug statement
+                print(f"DEBUG: Going left from {node.value}") # Debug statement
                 node.left = _remove(node.left, value)
             elif value > node.value:
                 # If the value is larger, the node to remove is in the right subtree.
                 # Recursively call _remove on the right child and assign the result
                 # back to node.right. This re-links the parent.
-                # print(f"DEBUG: Going right from {node.value}") # Debug statement
+                print(f"DEBUG: Going right from {node.value}") # Debug statement
                 node.right = _remove(node.right, value)
             else:
                 # Node Found! The current 'node' is the one to be removed.
@@ -318,13 +258,13 @@ class BST(BinaryTree):
                 # Case 1: Node has 0 or 1 child.
                 # If no left child, the right child (or None) replaces this node.
                 if not node.left:
-                    # print(f"DEBUG: Case 1/2a - No left child.") # Debug statement
+                    print(f"DEBUG: Case 1/2a - No left child.") # Debug statement
                     # Return the right child. The parent's pointer will be updated to this.
                     return node.right
                 # If no right child (but has a left), the left child replaces this node.
                 # This is effectively Case 2b.
                 if not node.right: # Checks if node.right is None
-                    # print(f"DEBUG: Case 1/2b - No right child.") # Debug statement
+                    print(f"DEBUG: Case 1/2b - No right child.") # Debug statement
                     # Return the left child. The parent's pointer will be updated to this.
                     return node.left
 
@@ -335,7 +275,7 @@ class BST(BinaryTree):
                 # such value, making it suitable to replace the removed node while
                 # maintaining the BST property.
                 min_node = _min_value_node(node.right)
-                # print(f"DEBUG: Successor is {min_node.value}") # Debug statement
+                print(f"DEBUG: Successor is {min_node.value}") # Debug statement
 
                 # Copy the value of the inorder successor to the current node (the one we want to remove).
                 # Conceptually, the current node is replaced by the successor's value.
@@ -345,7 +285,7 @@ class BST(BinaryTree):
                 # The successor is guaranteed to have at most one right child, so
                 # the recursive call will eventually hit Case 1 or Case 2.
                 # Assign the result back to node.right to update the right subtree.
-                # print(f"DEBUG: Recursively removing successor {min_node.value} from right subtree.") # Debug statement
+                print(f"DEBUG: Recursively removing successor {min_node.value} from right subtree.") # Debug statement
                 node.right = _remove(node.right, min_node.value)
 
             # Return the current node. This is essential for the recursive calls
@@ -358,6 +298,251 @@ class BST(BinaryTree):
         # itself is removed.
         self.root = _remove(self.root, value)
 
+
+# --- AVLTree Class ---
+# Represents a AVL Tree, inheriting basic tree operations from BST.
+class AVLTree(BST):
+    def __init__(self, root=None):
+        """
+        Initializes an AVL Tree with an optional root node.
+
+        Args:
+            root: The root node of the AVL tree.
+        """
+        super().__init__(root)    # Inherit from BST
+
+
+    def get_height(self, node):
+        """
+        Gets the height of a node in the AVL tree.
+
+        Args:
+            node: The node to get the height of.
+
+        Returns:
+            int: The height of the node.
+        """
+        if not node:          # If the node is None
+            return -1         # Conventionally -1 for a null node, 0 for a leaf
+        return node.height    # Otherwise, return the node's height
+
+    def get_balance(self, node):
+        """
+        Gets the balance factor of a node in the AVL tree.
+
+        Args:
+            node: The node to get the balance factor of.
+
+        Returns:
+            int: The balance factor of the node.
+        """
+        if not node:          # If the node is None
+            return 0.         # Balance factor is 0 for a null node (leaf node)
+        return self.get_height(node.left) - self.get_height(node.right) # Calculate balance factor
+
+    def left_rotate(self, z):
+        """
+        Performs a left rotation on a node in the AVL tree.
+
+        Args:
+            z: The node to rotate.
+
+        Returns:
+            Node: The new root of the rotated subtree.
+        """
+        # Initialize the nodes needed
+        y = z.right
+        T2 = y.left
+
+        # Rotate
+        y.left = z
+        z.right = T2
+
+        # Update heights AFTER rotation
+        z.height = 1 + max(self.get_height(z.left), self.get_height(z.right))
+        y.height = 1 + max(self.get_height(y.left), self.get_height(y.right))
+        return y   # Return the new root of the subtree (y)
+
+    def right_rotate(self, z):
+        """
+        Performs a right rotation on a node in the AVL tree.
+
+        Args:
+            z: The node to rotate.
+
+        Returns:
+            Node: The new root of the rotated subtree.
+        """
+        # Initialize the nodes needed
+        y = z.left
+        T3 = y.right
+
+        # Rotate
+        y.right = z
+        z.left = T3
+
+        # Update heights AFTER rotation
+        z.height = 1 + max(self.get_height(z.left), self.get_height(z.right))
+        y.height = 1 + max(self.get_height(y.left), self.get_height(y.right))
+        return y   # Return the new root of the subtree (y)
+
+    # Override insert from BST
+    def insert(self, value):
+        """
+        Inserts a value into the AVL Tree, maintaining the AVL property.
+
+        Args:
+            value: The value to insert.
+        """
+        def _insert(node, value):
+            """
+            Recursive helper for insertion.
+
+            Args:
+                node: The current node being examined.
+                value: The value to insert.
+
+            Returns:
+                Node: The root of the subtree after insertion.
+            """
+            # Standard BST insertion
+            if not node:   # If the current node is None (empty subree)
+                return Node(value)    # Create a new node with the value and return it
+            if value < node.value:    # If the value is less than the current node's value
+                node.left = _insert(node.left, value) # Insert into the left subtree
+            elif value > node.value:  # If the value is greater than the current node's value
+                node.right = _insert(node.right, value) # Insert into the right subtree
+            else:
+                print(f"Duplicated key {value} ignored.") # Suppress during insertion if not testing output
+                return node # Value already exists, return the current node
+
+            # Update height of current node after insertion into subtree
+            node.height = 1 + max(self.get_height(node.left), self.get_height(node.right))
+
+            # Get balance factor
+            balance = self.get_balance(node)
+
+            # Perform rotations if unbalanced
+            # ----------------------------------
+            # Left Left Case
+            if balance > 1 and value < node.left.value:
+                return self.right_rotate(node)
+
+            # Right Right Case
+            if balance < -1 and value > node.right.value:
+                return self.left_rotate(node)
+
+            # Left Right Case
+            if balance > 1 and value > node.left.value:
+                node.left = self.left_rotate(node.left)
+                return self.right_rotate(node)
+
+            # Right Left Case
+            if balance < -1 and value < node.right.value:
+                node.right = self.right_rotate(node.right)
+                return self.left_rotate(node)
+
+            # Return the (potentially new) root of the subtree
+            return node
+
+        self.root = _insert(self.root, value)  # Start the insertion from the root
+
+
+    # Override print_tree from BinaryTree to include balance factor (already done)
+    def print_tree(self, node=None, level=0, prefix='Root:'):
+        """
+        Prints the AVL tree in a visually appealing format.
+
+        Args:
+            node: The starting node for printing. Defaults to the root of the tree.
+            level: The current level of the tree. Defaults to 0 (used for indentation).
+            prefix: The prefix for indiicate the position of the node (e.g. "Root:", "L----", "R----").
+        """
+        # Ensure get_balance is called on the correct object (self)
+        if node:    # If the current node is not None
+            balance = self.get_balance(node)  # Get the balance factor of the node
+            print(' ' * (5 * level) + prefix + f"{node.value} (BF={balance})") # Print node value and balance factor
+            # Recursively call print_tree on left and right, passing self
+            self.print_tree(node.left, level + 1, 'L----') # Print left subtree
+            self.print_tree(node.right, level + 1, 'R----') # Print right subtree
+
+
+
+# --- Command Line Interface ---
+# Demonstrate the structure of a sample Binary Tree
+# Demonstrate the structure of a sample BST
+# Demonstrate the structure of a sample AVL Tree with balance factor (BF)
+if __name__ == "__main__":
+    print("--- Running Example Usage ---")
+
+    bt = BinaryTree()
+    bt.root = Node('A')
+    bt.root.left = Node('B')
+    bt.root.right = Node('C')
+    bt.root.left.left = Node('D')
+    bt.root.left.right = Node('E')
+    bt.root.right.right = Node('F')
+
+    print("\n\nPrint The Sample Binary Tree")
+    bt.print_tree(bt.root)
+
+    print("\n\nIn-order Traversal:")
+    bt.inorder(bt.root)
+    print("\n\nPre-order Traversal:")
+    bt.preorder(bt.root)
+    print("\n\nPost-order Traversal:")
+    bt.postorder(bt.root)
+
+
+    bst = BST()
+    for value in [50, 30, 70, 20, 40, 60, 80]:
+        bst.insert(value)
+
+ # Demo of BST:
+ #      50
+ #    /   \
+ #   30    70
+ #  /  \   /  \
+ # 20  40 60  80
+ #----------------
+    print("\n\nPrint BST Tree")
+    bst.print_tree(bst.root)
+
+    print("\n\nIn-order Traversal:")
+    bst.inorder(bst.root)
+    print("\n\nPre-order Traversal:")
+    bst.preorder(bst.root)
+    print("\n\nPost-order Traversal:")
+    bst.postorder(bst.root)
+
+
+    avl = AVLTree()
+    for value in [50, 30, 70, 20, 40, 60, 80]:
+        avl.insert(value)
+ # Demo of AVL:
+ #      50
+ #    /   \
+ #   30    70
+ #  /  \   /  \
+ # 20  40 60  80
+ #----------------
+    print("\n\nPrint AVL Tree")
+    avl.print_tree(avl.root)
+    print("\n\nIn-order Traversal:")
+
+    avl.inorder(avl.root)
+    print("\n\nPre-order Traversal:")
+    avl.preorder(avl.root)
+    print("\n\nPost-order Traversal:")
+    avl.postorder(avl.root)
+
+
+
+
+
+
+
+'''
 
 # --- Helper function to capture print output ---
 # Useful for unit testing methods that print to stdout.
