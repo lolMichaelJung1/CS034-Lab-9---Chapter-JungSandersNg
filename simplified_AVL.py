@@ -174,28 +174,59 @@ class AVLTree(BST):
 
 
 
-# --- Command Line Interface ---
-# Demonstrate the structure of a sample AVL Tree with balance factor (BF)
- # Demo of BST:
+ # --- Command Line Interface ---
+ #---------------------------------------------------------
+ # Demo of AVL: insert() with balance factor (BF)
+ #---------------------------------------------------------
  #      50
  #    /   \
  #   30    70
  #  /  \   /  \
  # 20  40 60  80
 
-if __name__ == "__main__":
-    print("--- Running Example Usage ---")
-
+    print("\n\n-------Demo of AVL: insert() with balance factor-------")
     avl = AVLTree()
-    for value in [50, 30, 70, 20, 40, 60, 80]:
-        avl.insert(value)
 
-    print("\n\nPrint AVL Tree")
+    # Insert node(50) into the AVL tree
+    print("\n\nInsert node(50) into the AVL tree")
+    avl.insert(50)
+    print()
     avl.print_tree(avl.root)
-    print("\n\nIn-order Traversal:")
+    print() # Add a newline after traversal output
 
-    avl.inorder(avl.root)
-    print("\n\nPre-order Traversal:")
-    avl.preorder(avl.root)
-    print("\n\nPost-order Traversal:")
-    avl.postorder(avl.root)
+    print("\n\nInsert node(30) into the AVL tree")
+    avl.insert(30)
+    print()
+    avl.print_tree(avl.root)
+    print() # Add a newline after traversal output
+
+    print("\n\nInsert node(70) into the AVL tree")
+    avl.insert(70)
+    print()
+    avl.print_tree(avl.root)
+    print() # Add a newline after traversal output
+
+    print("\n\nInsert node(20) into the AVL tree")
+    avl.insert(20)
+    print()
+    avl.print_tree(avl.root)
+    print() # Add a newline after traversal output
+
+    print("\n\nInsert node(40) into the AVL tree")
+    avl.insert(40)
+    print()
+    avl.print_tree(avl.root)
+    print() # Add a newline after traversal output
+
+    print("\n\nInsert node(60) into the AVL tree")
+    avl.insert(60)
+    print()
+    avl.print_tree(avl.root)
+    print() # Add a newline after traversal output
+
+    print("\n\nInsert node(80) into the AVL tree")
+    avl.insert(80)
+    print()
+    avl.print_tree(avl.root)
+    print() # Add a newline after traversal output
+    print("\n------The end of Sample AVL Tree--------")
