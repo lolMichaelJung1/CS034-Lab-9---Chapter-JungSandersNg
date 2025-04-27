@@ -19,7 +19,7 @@
 from TreeNode import Node
 from io import StringIO
 import sys
-
+import unittest
 
 # --- BinaryTree Class ---
 # Represents a AVL Tree, implement common traversal methods and print_tree().
@@ -89,6 +89,105 @@ class BinaryTree:
                 self.print_tree(node.right, level + 1, 'R----')
 
 
+# --- Helper function to capture print output ---
+# Useful for unit testing methods that print to stdout.
+def capture_print_output(func, *args, **kwargs):
+    """
+    Captures the standard output (stdout) produced by a function call.
+
+    Args:
+        func: The function to call.
+        *args: Positional arguments to pass to the function.
+        **kwargs: Keyword arguments to pass to the function.
+
+    Returns:
+        str: The captured output as a string.
+    """
+    old_stdout = sys.stdout
+    sys.stdout = captured_output = StringIO()
+    try:
+        # Call the function with provided arguments
+        func(*args, **kwargs)
+    finally:
+        # Restore standard output regardless of exceptions
+        sys.stdout = old_stdout
+    # Return the value captured in the StringIO buffer
+    return captured_output.getvalue()
+
+# --- BinaryTree Tests ---
+# ------------------------
+class TestBinaryTree(unittest.TestCase):
+    def setUp(self):
+        self.bt = BinaryTree()
+        self.bt.root = Node('A')
+        self.bt.root.left = Node('B')
+        self.bt.root.right = Node('C')
+        self.bt.root.left.left = Node('D')
+        self.bt.root.left.right = Node('E')
+        self.bt.root.right.right = Node('F')
+
+    def test_inorder(self):
+        captured = StringIO()
+        sys.stdout = captured
+        self.bt.inorder(self.bt.root)
+        sys.stdout = sys.__stdout__
+        output = captured.getvalue()
+        self.assertIn('D B E A C F', output.strip())
+
+    def test_preorder(self):
+        captured = StringIO()
+        sys.stdout = captured
+        self.bt.preorder(self.bt.root)
+        sys.stdout = sys.__stdout__
+        output = captured.getvalue()
+        self.assertIn('A B D E C F', output.strip())
+
+    def test_postorder(self):
+        captured = StringIO()
+        sys.stdout = captured
+        self.bt.postorder(self.bt.root)
+        sys.stdout = sys.__stdout__
+        output = captured.getvalue()
+        self.assertIn('D E B F C A', output.strip())
+
+
+# --- Command Line Interface ---
+# Demonstrate the structure of a sample Binary Tree
+# Demonstrate the structure of a sample BST
+# Demonstrate the structure of a sample AVL Tree with balance factor (BF)
+
+if __name__ == "__main__":
+    # Control whether to run demos or unit tests
+    run_tests = False  # <-- Set to True if you want to run unit tests
+    if not run_tests:
+        print("--- Running Example Usage ---")
+
+        # Demo of BinaryTree (travesal methods, print_tree())
+        #----------------------------------------------------
+        print("\n\n------ Demo of BinaryTree (traversal methods, print_tree) ------")
+        bt = BinaryTree()
+        bt.root = Node('A')
+        bt.root.left = Node('B')
+        bt.root.right = Node('C')
+        bt.root.left.left = Node('D')
+        bt.root.left.right = Node('E')
+        bt.root.right.right = Node('F')
+        print("\nPrint the Sample Binary Tree:")
+        bt.print_tree(bt.root)
+
+        print("\nIn-order Traversal:")
+        bt.inorder(bt.root)
+
+        print("\n\nPre-order Traversal:")
+        bt.preorder(bt.root)
+
+        print("\n\nPost-order Traversal:")
+        bt.postorder(bt.root)
+
+        print("\n\n------ End of BinaryTree Demo ------")
+        print("---------------------------------------------------")
+        # ------------The End of Demo of BinaryTree---------------
+
 # --- Command Line Interface ---
 # Demonstrate the structure of a sample Binary Tree
 # Command Line Interface
@@ -100,23 +199,3 @@ class BinaryTree:
 #     D  E    F
 
 
-if __name__ == "__main__":
-    print("--- Running Example Usage ---")
-
-    bt = BinaryTree()
-    bt.root = Node('A')
-    bt.root.left = Node('B')
-    bt.root.right = Node('C')
-    bt.root.left.left = Node('D')
-    bt.root.left.right = Node('E')
-    bt.root.right.right = Node('F')
-
-    print("\n\nPrint The Sample Binary Tree")
-    bt.print_tree(bt.root)
-
-    print("\n\nIn-order Traversal:")
-    bt.inorder(bt.root)
-    print("\n\nPre-order Traversal:")
-    bt.preorder(bt.root)
-    print("\n\nPost-order Traversal:")
-    bt.postorder(bt.root)
