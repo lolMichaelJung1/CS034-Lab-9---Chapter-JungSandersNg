@@ -186,117 +186,107 @@ class TestBST(unittest.TestCase):
 
 
 
-# ---Command Line Interface----
-#-------------------------------
+# --- Command Line Interface ---
+# Demonstrate the structure of a sample Binary Tree
+# Demonstrate the structure of a sample BST
+# Demonstrate the structure of a sample AVL Tree with balance factor (BF)
 
 if __name__ == "__main__":
-    print("--- Running Example Usage ---")
+    # Control whether to run demos or unit tests
+    run_tests = False  # <-- Set to True if you want to run unit tests
+    if not run_tests:
+        print("--- Running Example Usage ---")
 
-   #---------------------------------------------------- 
-   # Demo of BinaryTree (travesal methods, print_tree())
-   #----------------------------------------------------
-    bt = BinaryTree()
-    bt.root = Node('A')
-    bt.root.left = Node('B')
-    bt.root.right = Node('C')
-    bt.root.left.left = Node('D')
-    bt.root.left.right = Node('E')
-    bt.root.right.right = Node('F')
+        # Demo of BinaryTree (travesal methods, print_tree())
+        #----------------------------------------------------
+        print("\n\n------ Demo of BinaryTree (traversal methods, print_tree) ------")
+        bt = BinaryTree()
+        bt.root = Node('A')
+        bt.root.left = Node('B')
+        bt.root.right = Node('C')
+        bt.root.left.left = Node('D')
+        bt.root.left.right = Node('E')
+        bt.root.right.right = Node('F')
+        print("\nPrint the Sample Binary Tree:")
+        bt.print_tree(bt.root)
 
-    print("In-order Traversal:")
-    bt.inorder(bt.root)
-    print()
+        print("\nIn-order Traversal:")
+        bt.inorder(bt.root)
 
-    print("Pre-order Traversal:")
-    bt.preorder(bt.root)
-    print()
+        print("\n\nPre-order Traversal:")
+        bt.preorder(bt.root)
 
-    print("Post-order Traversal:")
-    bt.postorder(bt.root)
-    print()
+        print("\n\nPost-order Traversal:")
+        bt.postorder(bt.root)
 
-    print()
-    print("Print Tree:")
-    bt.print_tree(bt.root)
- # ------------The End of Demo of BinaryTree---------------
+        print("\n\n------ End of BinaryTree Demo ------")
+        print("---------------------------------------------------")
+        # ------------The End of Demo of BinaryTree---------------
 
 
- #---------------------------------------------------------
- # Demo of BST: insert(), search(), remove(), inorder()
- #
- #     50
- #    /   \
- #   30    70
- #  /  \   /  \
- # 20  40 60  80
- #
- #---------------------------------------------------------
-    bst = BST()
+ 
+        # Demo of BST: insert(), search(), remove(), inorder()
+        #-------------------------------------------------
+        #      50
+        #    /   \
+        #   30    70
+        #  /  \   /  \
+        # 20  40 60  80
 
-    values = [50, 30, 70, 20, 40, 60, 80]
-    for value in values:
-        print(f"Inserting value: {value}")
-        bst.insert(value)
+        # DEMO: BST
+        print("\n\n------- Demo of BST: insert(), search(), remove(), traversal ------")
+        bst = BST()
+        values = [50, 30, 70, 20, 40, 60, 80]
+        for value in values:
+            print(f"\nInserting value: {value}")
+            bst.insert(value)
 
-    print("\n\nPrint Binary Search Tree")
-    bst.print_tree(bst.root)
+        print("\nPrint the Sample BST:")
+        bst.print_tree(bst.root)
 
-    print("\n\nPre-order Traversal through the BST:")
-    bst.preorder(bst.root)
-    print() # Add a newline after traversal output
+        print("\nIn-order Traversal:")
+        bst.inorder(bst.root)
 
-    print("\n\nIn-order Traversal through the BST:")
-    bst.inorder(bst.root)
-    print()
+        print("\n\nPre-order Traversal:")
+        bst.preorder(bst.root)
 
-    print("\n\nPost-order Traversal through the BST:")
-    bst.postorder(bst.root)
-    print()
+        print("\n\nPost-order Traversal:")
+        bst.postorder(bst.root)
 
-    print("\n\nSearch for 40:")
-    found_node = bst.search(40)
-    if found_node:
-        print(f"Found node with value: 40")
+        print("\n\nSearching values in BST:")
+        search_values = [40, 100, 60]
+        for value in search_values:
+            found = bst.search(value)
+            print(f"\nSearch for {value}: {'Found' if found else 'Not Found'}")
+
+        print("\n\nRemoving values from BST:")
+        for remove_value in [20, 30, 50]:
+            print(f"\nRemoving {remove_value}:")
+            bst.remove(remove_value)
+            print("\nBST after removal:")
+            bst.print_tree(bst.root)
+
+        # ------------The End of Demo of BST---------------
+
+
+        # Demo of AVL: insert() with balance factor
+        #--------------------------------------------
+        #      50
+        #    /   \
+        #   30    70
+        #  /  \   /  \
+        # 20  40 60  80
+        print("\n\n------- Demo of AVLTree: insert() with balancing (show balance factors) ------")
+        avl = AVLTree()
+        for value in [50, 30, 70, 20, 40, 60, 80]:
+            print(f"\nInserting {value} into AVL Tree:")
+            avl.insert(value)
+            avl.print_tree(avl.root)
+            print()
+
+        print("\n\n------ End of AVLTree Demo ------")
+        print("---------------------------------------------------")
+
     else:
-        print(f"Value 40 not found.")
-
-    print("\n\nSearch for 100:")
-    found_node = bst.search(100)
-    if found_node:
-        print(f"Found node with value: 100")
-    else:
-        print(f"Value 100 not found.")
-
-    print("\n\nSearch for 60:")
-    found_node = bst.search(60)
-    if found_node:
-        print(f"Found node with value: 60")
-    else:
-        print(f"Value 60 not found.")
-
-    # Remove leaf node 20 (with no child)
-    print("\n\nRemove 20:")
-    bst.remove(20)
-    bst.print_tree(bst.root)
-    bst.inorder(bst.root)
-
-    # Remove node 30 (only with right child Node(40))
-    print("\n\nRemove 30:")
-    bst.remove(30)
-    bst.print_tree(bst.root)
-    bst.inorder(bst.root)
-
-    # Remove node 50 (with two children)
-    print("\n\nRemove 50:")
-    bst.remove(50)
-    bst.print_tree(bst.root)
-    bst.inorder(bst.root)
-
-
-    # --- Running Unit Tests ---
-    print("\n\n--- Running Unit Tests ---")
-    # Note: argv and exit=False are used so that unittest.main() doesn't
-    # try to parse command-line arguments or exit the script immediately.
-    unittest.main(argv=['first-arg-is-ignored'], exit=False)
-
-
+        print("--- Running Unit Tests ---\n")
+        unittest.main(argv=['first-arg-is-ignored'], exit=False)
