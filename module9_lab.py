@@ -20,7 +20,7 @@ class Node:
         self.value = value      # Store data in the node
         self.left = None        # Pointer to the left child node
         self.right = None       # Pointer to the right child node
-        self.height = 0         # Height of the node (used in AVL trees for balancing)
+        self.height = 1         # Height of the node (used in AVL trees for balancing)
 
     def __str__(self):
         # Return a string representation of the node's value
