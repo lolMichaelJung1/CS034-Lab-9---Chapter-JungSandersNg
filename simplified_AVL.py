@@ -278,14 +278,6 @@ if __name__ == "__main__":
         #  /  \   /  \
         # 10  30 50  70
 
-Root:40 (BF=0)
-     L----20 (BF=0)
-          L----10 (BF=0)
-          R----30 (BF=0)
-     R----60 (BF=0)
-          L----50 (BF=0)
-          R----70 (BF=0)
-
         print("\n\n------- Demo of AVLTree: insert() with balancing (show balance factors) ------")
         avl2 = AVLTree()
         for value in [10, 20, 30, 40, 50, 60, 70]:
