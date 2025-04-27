@@ -11,6 +11,7 @@ from io import StringIO # Used for capturing print output in tests
 from TreeNode import Node
 from BinaryTree import BinaryTree
 from BST import BST
+from simplified_AVL import AVLTree
 
 
 # --- Helper function to capture print output ---
@@ -198,7 +199,15 @@ if __name__ == "__main__":
         print("--- Running Example Usage ---")
 
         # Demo of BinaryTree (travesal methods, print_tree())
-        #----------------------------------------------------
+        # Create a test tree, then print the tree
+        # with Indentation, pre-order, in-order, post-order
+        #
+        #         A
+        #        / \
+        #       B   C
+        #      / \   \
+        #     D  E    F
+        
         print("\n\n------ Demo of BinaryTree (traversal methods, print_tree) ------")
         bt = BinaryTree()
         bt.root = Node('A')
