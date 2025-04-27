@@ -74,6 +74,7 @@ Implement a **Binary Search Tree (BST)** with the following operations:
 
 ## AVL Insertion
 - Implement AVL Tree insertion for the same list: 50, 30, 70, 20, 40, 60, 80
+- Print each inserted node with updated balance factor for each node in the AVL tree
 - Ensure the tree self-balances by applying rotations
 
 
