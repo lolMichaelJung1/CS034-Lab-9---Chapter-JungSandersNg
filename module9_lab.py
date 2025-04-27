@@ -469,12 +469,16 @@ class AVLTree(BST):
 
 
 # --- Command Line Interface ---
-# Demonstrate the structure of a sample Binary Tree
-# Demonstrate the structure of a sample BST
-# Demonstrate the structure of a sample AVL Tree with balance factor (BF)
+# Demonstrate a sample Binary Tree
+# Demonstrate a sample BST
+# Demonstrate a sample AVL Tree with balance factor (BF)
+
 if __name__ == "__main__":
     print("--- Running Example Usage ---")
 
+ #----------------------------------------------------
+ # Demo of BinaryTree (travesal methods, print_tree())
+ #----------------------------------------------------
     bt = BinaryTree()
     bt.root = Node('A')
     bt.root.left = Node('B')
@@ -492,40 +496,92 @@ if __name__ == "__main__":
     bt.preorder(bt.root)
     print("\n\nPost-order Traversal:")
     bt.postorder(bt.root)
+ # ------------The End of Demo of BinaryTree---------------
 
 
-    bst = BST()
-    for value in [50, 30, 70, 20, 40, 60, 80]:
-        bst.insert(value)
-
- # Demo of BST:
+ #---------------------------------------------------------
+ # Demo of BST: insert(), search(), remove(), inorder()
+ #---------------------------------------------------------
  #      50
  #    /   \
  #   30    70
  #  /  \   /  \
  # 20  40 60  80
- #----------------
-    print("\n\nPrint BST Tree")
-    bst.print_tree(bst.root)
+    bst = BST()
+    values = [50, 30, 70, 20, 40, 60, 80]
+    for value in values:
+        print(f"Inserting value: {value}")
+        bst.insert(value)
 
-    print("\n\nIn-order Traversal:")
+    print("\n\nIn-order Traversal through the sample BST:")
     bst.inorder(bst.root)
-    print("\n\nPre-order Traversal:")
-    bst.preorder(bst.root)
-    print("\n\nPost-order Traversal:")
-    bst.postorder(bst.root)
+    print() # Add a newline after traversal output
 
+    print("\n\nPre-order Traversal through the sample BST:")
+    bst.preorder(bst.root)
+    print() # Add a newline after traversal output
+ 
+    print("\n\nPre-order Traversal through the sample BST:")
+    bst.preorder(bst.root)
+    print() # Add a newline after traversal output
+ 
+    print("\n\nPost-order Traversal through the BST:")
+    bst.postorder(bst.root)
+    print() # Add a newline after traversal output
+
+    print("\n\nSearch for 40 in the sample BST:")
+    found_node = bst.search(40)
+    if found_node:
+        print(f"Found node with value: 40")
+    else:
+        print(f"Value 40 not found.")
+
+    print("\n\nSearch for 100 in the sample BST: ")
+    found_node = bst.search(100)
+    if found_node:
+        print(f"Found node with value: 100")
+    else:
+        print(f"Value 100 not found.")
+
+    print("\n\nSearch for 60 in the sample BST: ")
+    found_node = bst.search(60)
+    if found_node:
+        print(f"Found node with value: 60")
+    else:
+        print(f"Value 60 not found.")
+
+    # Remove leaf node 20 (with no child)
+    print("Remove leaf node 20 from the sample BST:")
+    bst.remove(20)
+    bst.print_tree(bst.root)
+    bst.inorder(bst.root)
+
+    # Remove node 30 (only with right child Node(40))
+    print("Remove node 30 from the sample BST:")
+    bst.remove(30)
+    bst.print_tree(bst.root)
+    bst.inorder(bst.root)
+
+    # Remove node 50 (with two children)
+    print("Remove node 50 from the sample BST:")
+    bst.remove(50)
+    bst.print_tree(bst.root)
+    bst.inorder(bst.root)
+ # ------------The End of Demo of BST---------------
+
+ #---------------------------------------------------------
+ # Demo of BST: insert(), search(), remove(), inorder()
+ #---------------------------------------------------------
+ #      50
+ #    /   \
+ #   30    70
+ #  /  \   /  \
+ # 20  40 60  80
 
     avl = AVLTree()
     for value in [50, 30, 70, 20, 40, 60, 80]:
         avl.insert(value)
- # Demo of AVL:
- #      50
- #    /   \
- #   30    70
- #  /  \   /  \
- # 20  40 60  80
- #----------------
+
     print("\n\nPrint AVL Tree")
     avl.print_tree(avl.root)
     print("\n\nIn-order Traversal:")
@@ -535,8 +591,6 @@ if __name__ == "__main__":
     avl.preorder(avl.root)
     print("\n\nPost-order Traversal:")
     avl.postorder(avl.root)
-
-
 
 
 
