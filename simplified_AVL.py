@@ -183,7 +183,8 @@ class AVLTree(BST):
  #   30    70
  #  /  \   /  \
  # 20  40 60  80
-
+if __name__ == "__main__":
+    
     print("\n\n-------Demo of AVL: insert() with balance factor-------")
     avl = AVLTree()
 
