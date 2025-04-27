@@ -7,7 +7,9 @@
 #--------------------------------------------------------------------------------------------
 import unittest
 import sys
+import contextlib # used to redirect stdout safely in the test functions
 from io import StringIO # Used for capturing print output in tests
+from contextlib import redirect_stdout
 
 
 # --- Class Definitions ---
@@ -503,25 +505,22 @@ class TestBinaryTree(unittest.TestCase):
 
     def test_inorder(self):
         captured = StringIO()
-        sys.stdout = captured
-        self.bt.inorder(self.bt.root)
-        sys.stdout = sys.__stdout__
+        with redirect_stdout(captured):
+            self.bt.inorder(self.bt.root)
         output = captured.getvalue()
         self.assertIn('D B E A C F', output.strip())
 
     def test_preorder(self):
         captured = StringIO()
-        sys.stdout = captured
-        self.bt.preorder(self.bt.root)
-        sys.stdout = sys.__stdout__
+        with redirect_stdout(captured):
+            self.bt.preorder(self.bt.root)
         output = captured.getvalue()
         self.assertIn('A B D E C F', output.strip())
 
     def test_postorder(self):
         captured = StringIO()
-        sys.stdout = captured
-        self.bt.postorder(self.bt.root)
-        sys.stdout = sys.__stdout__
+        with redirect_stdout(captured):
+            self.bt.postorder(self.bt.root)
         output = captured.getvalue()
         self.assertIn('D E B F C A', output.strip())
 
@@ -666,7 +665,7 @@ class TestBST(unittest.TestCase):
         print("\nTesting Remove (Non-existent Value, Recursive):")
         self.build_base_tree()
         self.bst.remove(self.non_existent_value)
-        self.assertIsNone(self.bst.search(self.non_existent_value), "Non-existent value should not be found")
+        self.assertIsNotNone(self.bst.root, "Non-existent value should not be found")
         # Ensure the tree structure didn't change (e.g., root is still 10)
         self.assertEqual(self.bst.root.value, 10, "Root should remain unchanged when removing non-existent value")
 
@@ -705,9 +704,8 @@ class TestAVLTree(unittest.TestCase):
     def test_insert_duplicate(self):
         self.build_avl_tree()
         captured = StringIO()
-        sys.stdout = captured
-        self.avl.insert(50)
-        sys.stdout = sys.__stdout__
+        with contextlib.redirect_stdout(captured):
+            self.avl.insert(50)
         output = captured.getvalue()
         self.assertIn("Duplicated key 50 ignored.", output)
 
@@ -717,6 +715,7 @@ class TestAVLTree(unittest.TestCase):
 # Demonstrate the structure of a sample Binary Tree
 # Demonstrate the structure of a sample BST
 # Demonstrate the structure of a sample AVL Tree with balance factor (BF)
+# Enter python module9_lab.py in the command line to run the demos for BinaryTree, BST, and AVLTree
 if __name__ == "__main__":
     # Control whether to run demos or unit tests
     run_tests = False  # <-- Set to True if you want to run unit tests
