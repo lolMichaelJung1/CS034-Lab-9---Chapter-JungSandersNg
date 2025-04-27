@@ -793,9 +793,7 @@ if __name__ == "__main__":
             bst.print_tree(bst.root)
 
         # ------------The End of Demo of BST---------------
-
-
-        # Demo of AVL: insert() with balance factor
+        # Demo of AVL (insert() without rotation)
         #--------------------------------------------
         #      50
         #    /   \
@@ -803,16 +801,34 @@ if __name__ == "__main__":
         #  /  \   /  \
         # 20  40 60  80
         print("\n\n------- Demo of AVLTree: insert() with balancing (show balance factors) ------")
-        avl = AVLTree()
+        avl1 = AVLTree()
+        print("\n\n------Balanced AVL Tree without Rotation------")
         for value in [50, 30, 70, 20, 40, 60, 80]:
             print(f"\nInserting {value} into AVL Tree:")
-            avl.insert(value)
-            avl.print_tree(avl.root)
+            avl1.insert(value)
+            avl1.print_tree(avl1.root)
             print()
 
+
+        # Demo of AVL (insert() with rotation)
+        #--------------------------------------------
+        #      40
+        #    /   \
+        #   20    60
+        #  /  \   /  \
+        # 10  30 50  70
+
+        print("\n\n------- Demo of AVLTree: insert() with balancing (show balance factors) ------")
+        avl2 = AVLTree()
+        for value in [10, 20, 30, 40, 50, 60, 70]:
+            print(f"\nInserting {value} into AVL Tree:")
+            avl2.insert(value)
+            avl2.print_tree(avl2.root)
+            print()
         print("\n\n------ End of AVLTree Demo ------")
         print("---------------------------------------------------")
-
+    
     else:
         print("--- Running Unit Tests ---\n")
         unittest.main(argv=['first-arg-is-ignored'], exit=False)
+
