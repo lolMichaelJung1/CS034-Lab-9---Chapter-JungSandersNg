@@ -174,60 +174,104 @@ class AVLTree(BST):
 
 
 
- # --- Command Line Interface ---
- #---------------------------------------------------------
- # Demo of AVL: insert() with balance factor (BF)
- #---------------------------------------------------------
- #      50
- #    /   \
- #   30    70
- #  /  \   /  \
- # 20  40 60  80
+# --- Helper function to capture print output ---
+# Useful for unit testing methods that print to stdout.
+def capture_print_output(func, *args, **kwargs):
+    """
+    Captures the standard output (stdout) produced by a function call.
+
+    Args:
+        func: The function to call.
+        *args: Positional arguments to pass to the function.
+        **kwargs: Keyword arguments to pass to the function.
+
+    Returns:
+        str: The captured output as a string.
+    """
+    old_stdout = sys.stdout
+    sys.stdout = captured_output = StringIO()
+    try:
+        # Call the function with provided arguments
+        func(*args, **kwargs)
+    finally:
+        # Restore standard output regardless of exceptions
+        sys.stdout = old_stdout
+    # Return the value captured in the StringIO buffer
+    return captured_output.getvalue()
+
+
+# --- AVLTree Tests ---
+# ---------------------
+class TestAVLTree(unittest.TestCase):
+    def setUp(self):
+        self.avl = AVLTree()
+        self.values = [50, 30, 70, 20, 40, 60, 80]
+
+    def build_avl_tree(self):
+        for value in self.values:
+            self.avl.insert(value)
+
+    def test_insert_balancing(self):
+        self.build_avl_tree()
+        self.assertIsNotNone(self.avl.root, "AVL Tree root should not be None")
+        self.assertEqual(self.avl.root.value, 50, "Root should be 50")
+
+    def test_search_inserted_values(self):
+        self.build_avl_tree()
+        for value in self.values:
+            found_node = self.avl.root
+            stack = [found_node]
+            found = False
+            while stack:
+                current = stack.pop()
+                if current:
+                    if current.value == value:
+                        found = True
+                        break
+                    stack.append(current.left)
+                    stack.append(current.right)
+            self.assertTrue(found, f"Value {value} should be found in AVL Tree")
+
+    def test_insert_duplicate(self):
+        self.build_avl_tree()
+        captured = StringIO()
+        sys.stdout = captured
+        self.avl.insert(50)
+        sys.stdout = sys.__stdout__
+        output = captured.getvalue()
+        self.assertIn("Duplicated key 50 ignored.", output)
+
+
+# --- Command Line Interface ---
+# Demonstrate the structure of a sample Binary Tree
+# Demonstrate the structure of a sample BST
+# Demonstrate the structure of a sample AVL Tree with balance factor (BF)
+
 if __name__ == "__main__":
-    
-    print("\n\n-------Demo of AVL: insert() with balance factor-------")
-    avl = AVLTree()
+    # Control whether to run demos or unit tests
+    run_tests = False  # <-- Set to True if you want to run unit tests
+    if not run_tests:
+        print("--- Running Example Usage ---")
 
-    # Insert node(50) into the AVL tree
-    print("\n\nInsert node(50) into the AVL tree")
-    avl.insert(50)
-    print()
-    avl.print_tree(avl.root)
-    print() # Add a newline after traversal output
 
-    print("\n\nInsert node(30) into the AVL tree")
-    avl.insert(30)
-    print()
-    avl.print_tree(avl.root)
-    print() # Add a newline after traversal output
+        # Demo of AVL: insert() with balance factor
+        #--------------------------------------------
+        #      50
+        #    /   \
+        #   30    70
+        #  /  \   /  \
+        # 20  40 60  80
+        print("\n\n------- Demo of AVLTree: insert() with balancing (show balance factors) ------")
+        avl = AVLTree()
+        for value in [50, 30, 70, 20, 40, 60, 80]:
+            print(f"\nInserting {value} into AVL Tree:")
+            avl.insert(value)
+            avl.print_tree(avl.root)
+            print()
 
-    print("\n\nInsert node(70) into the AVL tree")
-    avl.insert(70)
-    print()
-    avl.print_tree(avl.root)
-    print() # Add a newline after traversal output
+        print("\n\n------ End of AVLTree Demo ------")
+        print("---------------------------------------------------")
 
-    print("\n\nInsert node(20) into the AVL tree")
-    avl.insert(20)
-    print()
-    avl.print_tree(avl.root)
-    print() # Add a newline after traversal output
-
-    print("\n\nInsert node(40) into the AVL tree")
-    avl.insert(40)
-    print()
-    avl.print_tree(avl.root)
-    print() # Add a newline after traversal output
-
-    print("\n\nInsert node(60) into the AVL tree")
-    avl.insert(60)
-    print()
-    avl.print_tree(avl.root)
-    print() # Add a newline after traversal output
-
-    print("\n\nInsert node(80) into the AVL tree")
-    avl.insert(80)
-    print()
-    avl.print_tree(avl.root)
-    print() # Add a newline after traversal output
-    print("\n------The end of Sample AVL Tree--------")
+    else:
+        print("--- Running Unit Tests ---\n")
+        unittest.main(argv=['first-arg-is-ignored'], exit=False)
