@@ -163,7 +163,13 @@ if __name__ == "__main__":
         print("--- Running Example Usage ---")
 
         # Demo of BinaryTree (travesal methods, print_tree())
-        #----------------------------------------------------
+        #
+        #         A
+        #        / \
+        #       B   C
+        #      / \   \
+        #     D  E    F
+        
         print("\n\n------ Demo of BinaryTree (traversal methods, print_tree) ------")
         bt = BinaryTree()
         bt.root = Node('A')
@@ -188,14 +194,5 @@ if __name__ == "__main__":
         print("---------------------------------------------------")
         # ------------The End of Demo of BinaryTree---------------
 
-# --- Command Line Interface ---
-# Demonstrate the structure of a sample Binary Tree
-# Command Line Interface
-# Create a test tree:
-#         A
-#        / \
-#       B   C
-#      / \   \
-#     D  E    F
 
 
