@@ -482,14 +482,3 @@ if __name__ == "__main__":
     else:
         print("--- Running Unit Tests ---\n")
         unittest.main(argv=['first-arg-is-ignored'], exit=False)
-
-# ---Command Line Interface----
-# Demo of BST: insert(), search(), remove(), inorder()
- #
- #     50
- #    /   \
- #   30    70
- #  /  \   /  \
- # 20  40 60  80
- #
-  ##############################
